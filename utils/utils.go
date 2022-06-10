@@ -116,6 +116,28 @@ func IsValidCPF(cpf string) bool {
 	return true
 }
 
+func OnlyNumbers(s string) string {
+	return allNumRe.ReplaceAllString(s, "")
+}
+
+func NormalizeCPFCNPJ(cpfcnpj string) (string, bool) {
+
+	cpfcnpj = OnlyNumbers(cpfcnpj)
+	if IsValidCNPJ(cpfcnpj) {
+		return cpfcnpj, true
+	}
+
+	if len(cpfcnpj) > 11 {
+		cpfcnpj = cpfcnpj[3:]
+	}
+	if IsValidCPF(cpfcnpj) {
+		return cpfcnpj, true
+	}
+
+	return cpfcnpj, false
+
+}
+
 func RespondWithError(w http.ResponseWriter, code, errorCode int, message string) {
 	RespondWithJSON(w, code, map[string]interface{}{"error": message, "code": errorCode})
 }
