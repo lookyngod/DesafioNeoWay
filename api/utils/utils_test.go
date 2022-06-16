@@ -2,6 +2,8 @@ package utils
 
 import "testing"
 
+//TESTE DA REMOÇÃO DE MASCARA DE CPF/CNPJ
+
 func TestRemoveMask(t *testing.T) {
 	var tests = []struct {
 		CPFCNPJ string

@@ -10,7 +10,9 @@ import (
 	"net/http"
 )
 
-func BuscaDados(w http.ResponseWriter, r *http.Request) {
+//HANDLERS CPFCNPJ E POSTGRES
+
+func GetDados(w http.ResponseWriter, r *http.Request) {
 	var dados models.CPFCNPJ
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

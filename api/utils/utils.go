@@ -14,9 +14,12 @@ var (
 	allSame11 = regexp.MustCompile("0{11}|1{11}|2{11}|3{11}|4{11}|5{11}|6{11}|7{11}|8{11}|9{11}")
 )
 
+// Regex para desmascarar o CNPJ com caracteres especiais
 func RemoveMask(s string) string {
 	return allCarRe.ReplaceAllString(s, "")
 }
+
+//Regex para não aceitar letras
 
 func OnlyNumbers(s string) string {
 	return allNumRe.ReplaceAllString(s, "")

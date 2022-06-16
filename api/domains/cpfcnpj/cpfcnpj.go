@@ -14,6 +14,8 @@ const (
 	ErroCPFCNPJDuplicado = "pq: duplicate key value violates unique constraint \"cpfcnpj_pkey\""
 )
 
+//CONEXÃO COM O POSTGRES
+
 func ConectarPostgres() (*sql.DB, error) {
 	db, err := sql.Open("postgres", config.StringConexaoPostgres)
 	if err != nil {
@@ -28,6 +30,8 @@ func ConectarPostgres() (*sql.DB, error) {
 	return db, nil
 }
 
+//QUERY PARA INSERÇÃO DE CPF/CNPJ NO POSTGRES
+
 func InsereCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 	sqlStatement := fmt.Sprintf("INSERT INTO cpfcnpj(cpfcnpj, iscpf) VALUES('%s', '%t');", cpfcnpj, utils.IsValidCPF(cpfcnpj))
 	_, err := db.Exec(sqlStatement)
@@ -40,6 +44,8 @@ func InsereCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 	return nil
 }
 
+//QUERY PARA BUSCA DE CPF/CNPJ NO POSTGRES
+
 func BuscaCPFCNPJ(db *sql.DB, cpfcnpj string) (models.CPFCNPJ, error) {
 	var row models.CPFCNPJ
 	err := db.QueryRow("SELECT cpfcnpj, iscpf FROM cpfcnpj WHERE cpfcnpj=$1", cpfcnpj).Scan(&row.CPFCNPJ, &row.IsCPF)
@@ -48,6 +54,8 @@ func BuscaCPFCNPJ(db *sql.DB, cpfcnpj string) (models.CPFCNPJ, error) {
 	}
 	return row, nil
 }
+
+//QUERY PARA BUSCA DE TODOS OS CPF/CNPJ NO POSTGRES
 
 func BuscaTodosCPFCNPJ(db *sql.DB) ([]models.CPFCNPJ, error) {
 	var registros []models.CPFCNPJ
@@ -66,6 +74,8 @@ func BuscaTodosCPFCNPJ(db *sql.DB) ([]models.CPFCNPJ, error) {
 	return registros, nil
 }
 
+//QUERY PARA EXCLUSÃO DE CPF/CNPJ NO POSTGRES
+
 func DeleteCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 	_, err := db.Query("DELETE FROM cpfcnpj WHERE cpfcnpj=$1", cpfcnpj)
 	if err != nil {
@@ -73,6 +83,8 @@ func DeleteCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 	}
 	return nil
 }
+
+//QUERY PARA CRIAÇÃO DE TABELA NO POSTGRES
 
 func CreateTable(db *sql.DB) error {
 	sqlStatement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS cpfcnpj (cpfcnpj VARCHAR PRIMARY KEY, iscpf BOOLEAN, datacriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);")
