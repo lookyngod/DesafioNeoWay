@@ -23,12 +23,12 @@ PS: Para logs direto do BackEnd, recomendo usar Postman com os endpoints inserid
 
 - Instale o LiveServer na extensão para rodar o front end e inicie o GO Server no Rodapé do VSCode
 
-- Em seguida suba os containers rodando o comando abaixo na pasta raiz do projeto:
+- Primeiro suba os containers rodando o comando abaixo na pasta raiz do projeto:
 
     ```docker-compose up ```
 - Entre na pasta '/api' 
 
-- Em seguida ainda na pasta api rode o seguinte comando no terminal:
+- após subir o banco, ainda na pasta api rode o seguinte comando no terminal:
     ```go run router.go```
 - *Prontinho, sua aplicação está no ar!*
 ## Como testar a aplicação?
