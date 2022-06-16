@@ -312,35 +312,38 @@
 
 <script src="js/busca.js"></script>
 <script>
-    // $(document).ready(function() {
-    //     $.ajax({
-    //         url: "http://localhost:5000/api/database",
-    //         method: "POST",
-    //     }).done(function() {}).fail(function() {
-    //         Swal.fire(
-    //             'Ops...',
-    //             'Um momento...',
-    //             'error'
-    //         );
-    //     });
-    // });
-
-
     $(document).ready(function() {
         $.ajax({
-            url: "http://localhost:5000/api/getall",
-            method: "GET",
-        }).done(function(data) {
+            url: "http://localhost:5000/api/database",
+            method: "POST",
+        }).done(function() {
+            loadData();
+        }).fail(function(data) {;
+            Swal.fire(
+                'Ops...',
+                'Um momento...',
+                'error'
+            );
+        });
+    });
 
-            console.log(data)
+    function loadData() {
+        $(document).ready(function() {
+            $.ajax({
+                url: "http://localhost:5000/api/getall",
+                method: "GET",
+            }).done(function(data) {
 
-            var myVar = "";
 
-            console.log(data)
 
-            if (data != null && data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    myVar = `<tr>
+                var myVar = "";
+
+
+
+                if (data != null && data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        myVar = `<tr>
                             <td id=${data[i]["cpfcnpj"]}>${data[i]["cpfcnpj"]}</td>
                             <td><i class="material-icons icon-green" data-toggle="tooltip" title="Delete">&#xe876;</i></td>
                             <td id=${data[i]["cpfcnpj"]}>${data[i]["Datacriacao"]}</td>
@@ -348,22 +351,21 @@
                                 <a href="#" onclick="deleteCPFCNPJ(${data[i]["cpfcnpj"]})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
                         </tr>`
-                    $('#bodyTable').append(myVar);
+                        $('#bodyTable').append(myVar);
+                    }
                 }
-            }
 
-        }).fail(function() {
-            Swal.fire(
-                'Ops...',
-                'Falha na busca!',
-                'error'
-            );
+            }).fail(function() {
+                Swal.fire(
+                    'Ops...',
+                    'Falha na busca!',
+                    'error'
+                );
+            });
         });
-    });
+    }
 
     function deleteCPFCNPJ(cpfcnpj) {
-        console.log(cpfcnpj);
-
         $.ajax({
             url: "http://localhost:5000/api/deletedados",
             method: "POST",

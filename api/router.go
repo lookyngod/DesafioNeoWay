@@ -16,7 +16,7 @@ func main() {
 	router := mux.NewRouter()
 	r := router.PathPrefix("/api").Subrouter()
 
-	//Rotas de integração Front end com Back end
+	//ROTAS DE INTEGRAÇÃO DO FRONT END COM BACK END
 
 	r.HandleFunc("/cpfcnpj", (rest.CpfCnpjHandler))
 	r.HandleFunc("/getall", (rest.GetAllHandler))

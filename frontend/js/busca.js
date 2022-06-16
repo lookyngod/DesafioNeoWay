@@ -1,5 +1,7 @@
 $('#valida').on('submit', insereCPFCNPJ);
 
+
+//FUNÇÃO PARA INSERIR CPF/CNPJ
 function insereCPFCNPJ(event) {
     event.preventDefault();
 
@@ -39,6 +41,8 @@ function insereCPFCNPJ(event) {
     });
 }
 
+//JQUERY PARA DELETAR CPFCNPJ
+
 function deleteCPFCNPJ(event) {
     event.preventDefault();
 
@@ -74,21 +78,7 @@ function deleteCPFCNPJ(event) {
     });
 }
 
-// function IniciaBanco() {
-//     $(document).ready(function() {
-//         $.ajax({
-//             url: "http://localhost:5000/api/database",
-//             method: "POST",
-//         }).done(function() {}).fail(function() {
-//             Swal.fire(
-//                 'Ops...',
-//                 'Um momento...',
-//                 'error'
-//             );
-//         });
-//     });
-
-// }
+//JQUERY PARA BUSCAR OS DADOS
 
 function buscaDados() {
     $(document).ready(function() {

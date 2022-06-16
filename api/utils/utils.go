@@ -25,6 +25,7 @@ func OnlyNumbers(s string) string {
 	return allNumRe.ReplaceAllString(s, "")
 }
 
+// Validação de CNPJ
 func IsValidCNPJ(cnpj string) bool {
 	n := allNumRe.ReplaceAllString(cnpj, "")
 	if n == "" {
