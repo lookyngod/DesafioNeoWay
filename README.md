@@ -33,5 +33,5 @@ PS: Para logs direto do BackEnd, recomendo usar Postman com os endpoints inserid
 - *Prontinho, sua aplicação está no ar!*
 ## Como testar a aplicação?
 - Por padrão sua aplicação front irá rodar na porta 5500 ```http://localhost:5500/frontend```
-- A aplicação contém um prefixo rota '/api' para teste via Postman ```http://localhost:5500/api```
+- A aplicação contém um prefixo rota '/api' para teste via Postman ```http://localhost:5000/api```
 - *Tudo pronto, vamos testar!*
