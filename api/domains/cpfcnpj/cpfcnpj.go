@@ -57,11 +57,28 @@ func BuscaTodosCPFCNPJ(db *sql.DB) ([]models.CPFCNPJ, error) {
 	}
 	for rows.Next() {
 		var row models.CPFCNPJ
-		err = rows.Scan(&row.CPFCNPJ, &row.IsCPF)
+		err = rows.Scan(&row.CPFCNPJ, &row.IsCPF, &row.Datacriacao)
 		if err != nil {
 			return nil, fmt.Errorf("falha na execução da busca de todos os cpf no postgres: %v", err)
 		}
 		registros = append(registros, row)
 	}
 	return registros, nil
+}
+
+func DeleteCPFCNPJ(db *sql.DB, cpfcnpj string) error {
+	_, err := db.Query("DELETE FROM cpfcnpj WHERE cpfcnpj=$1", cpfcnpj)
+	if err != nil {
+		return fmt.Errorf("falha na execução da busca de cpf no postgres: %v", err)
+	}
+	return nil
+}
+
+func CreateTable(db *sql.DB) error {
+	sqlStatement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS cpfcnpj (cpfcnpj VARCHAR PRIMARY KEY, iscpf BOOLEAN, status TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);")
+	_, err := db.Exec(sqlStatement)
+	if err != nil {
+		return fmt.Errorf("falha na execução da criação da tabela cpfcnpj no postgres: %v", err)
+	}
+	return nil
 }

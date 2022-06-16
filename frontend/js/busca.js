@@ -15,10 +15,14 @@ function insereCPFCNPJ(event) {
                 'Sucesso!',
                 data,
                 'success'
-            );
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
             setTimeout(function() {
                 location.reload();
-            }, 3000);
+            }, 2000);
         } else {
             Swal.fire(
                 'Ops...',
@@ -27,7 +31,41 @@ function insereCPFCNPJ(event) {
             );
         }
     }).fail(function(data) {
-        console.log(data);
+        Swal.fire(
+            'Ops...',
+            data["responseJSON"]["error"],
+            'warning',
+        );
+    });
+}
+
+function deleteCPFCNPJ(event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: "http://localhost:5000/api/cpfcnpj",
+        method: "DELETE",
+        data: JSON.stringify({
+            cpfcnpj: $("#cpfcnpj").val(),
+        }, )
+    }).done(function(data) {
+        if (data == "CPF/CNPJ deletado com sucesso!") {
+            Swal.fire(
+                'Sucesso!',
+                data,
+                'success'
+            );
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        } else {
+            Swal.fire(
+                'Ops...',
+                data["error"],
+                'warning',
+            );
+        }
+    }).fail(function(data) {
         Swal.fire(
             'Ops...',
             data["responseJSON"]["error"],
@@ -38,15 +76,11 @@ function insereCPFCNPJ(event) {
 
 
 function buscaDados() {
-
     $(document).ready(function() {
         $.ajax({
             url: "http://localhost:5000/api/getall",
             method: "GET",
-        }).done(function() {
-            console.log("é gol do rony");
-        }).fail(function() {
-            console.log("é gol do rony");
+        }).done(function() {}).fail(function() {
             Swal.fire(
                 'Ops...',
                 'Usuário ou senha incorretos!',

@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <title>Validador CRUD de CPF/CNPJ</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -317,23 +318,27 @@
             method: "GET",
         }).done(function(data) {
 
+            console.log("Pintou notificação? no seu telefone ?")
+
             var myVar = "";
 
-            for (var i = 0; i < data.length; i++) {
-                myVar = `<tr>
-                            <td>${data[i]["cpfcnpj"]}</td>
+            console.log(data)
+
+            if (data != null && data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    myVar = `<tr>
+                            <td id=${data[i]["cpfcnpj"]}>${data[i]["cpfcnpj"]}</td>
                             <td><i class="material-icons icon-green" data-toggle="tooltip" title="Delete">&#xe876;</i></td>
                             <td>89 Chiaroscuro Rd, Portland, USA</td>
                             <td>
-                                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#" onclick="deleteCPFCNPJ(${data[i]["cpfcnpj"]})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
                         </tr>`
-                $('#bodyTable').append(myVar);
-                console.log(i);
+                    $('#bodyTable').append(myVar);
+                }
             }
 
         }).fail(function() {
-            console.log("é gol do rony");
             Swal.fire(
                 'Ops...',
                 'Usuário ou senha incorretos!',
@@ -341,6 +346,45 @@
             );
         });
     });
+
+    function deleteCPFCNPJ(cpfcnpj) {
+        console.log(cpfcnpj);
+
+        $.ajax({
+            url: "http://localhost:5000/api/deletedados",
+            method: "POST",
+            data: {
+                cpfcnpj: cpfcnpj,
+            },
+        }).done(function(data) {
+            if (data == "CPF/CNPJ deletado com sucesso!") {
+                Swal.fire(
+                    'Sucesso!',
+                    data,
+                    'success'
+                ).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
+            } else {
+                Swal.fire(
+                    'Ops...',
+                    data["error"],
+                    'warning',
+                );
+            }
+        }).fail(function(data) {
+            Swal.fire(
+                'Ops...',
+                data["responseJSON"]["error"],
+                'warning',
+            );
+        });
+    }
 </script>
 
 </html>

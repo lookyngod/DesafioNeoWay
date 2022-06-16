@@ -18,7 +18,8 @@ func main() {
 
 	r.HandleFunc("/cpfcnpj", (rest.CpfCnpjHandler))
 	r.HandleFunc("/getall", (rest.GetAllHandler))
-
+	r.HandleFunc("/deletedados", (rest.DeleteHandler))
+	r.HandleFunc("/database", (rest.CreateTableHandler))
 	http.Handle("/", router)
 
 	log.Printf("Padronizando para porta %d", config.Port)

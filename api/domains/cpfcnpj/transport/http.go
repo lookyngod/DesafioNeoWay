@@ -101,3 +101,34 @@ func GetAllValues(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.RespondWithJSON(w, http.StatusOK, dados)
 }
+
+func DeleteDados(w http.ResponseWriter, r *http.Request) {
+	pg, err := cpfcnpj.ConectarPostgres()
+	if err != nil {
+		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
+		return
+	}
+
+	err = cpfcnpj.DeleteCPFCNPJ(pg, r.FormValue("cpfcnpj"))
+	if err != nil {
+		utils.RespondWithError(w, http.StatusOK, 0, err.Error())
+		return
+	}
+	utils.RespondWithJSON(w, http.StatusOK, "CPF/CNPJ deletado com sucesso!")
+
+}
+
+func CreateTable(w http.ResponseWriter, r *http.Request) {
+	pg, err := cpfcnpj.ConectarPostgres()
+	if err != nil {
+		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
+		return
+	}
+
+	err = cpfcnpj.CreateTable(pg)
+	if err != nil {
+		utils.RespondWithError(w, http.StatusOK, 0, err.Error())
+		return
+	}
+	utils.RespondWithJSON(w, http.StatusOK, "Tabela criada com sucesso!")
+}

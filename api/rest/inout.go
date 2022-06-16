@@ -8,6 +8,7 @@ import (
 
 func CpfCnpjHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
 	// ROTA PARA INSERIR CPF OU CNPJ
 	if r.Method == http.MethodPost {
 		transport.RecebeCPFCNPJ(w, r)
@@ -33,4 +34,20 @@ func GetAllHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	utils.RespondWithError(w, http.StatusBadRequest, 0, "Método não permitido")
+}
+
+func CreateTableHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == http.MethodPost {
+		transport.CreateTable(w, r)
+		return
+	}
+}
+
+func DeleteHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == http.MethodPost {
+		transport.DeleteDados(w, r)
+		return
+	}
 }
