@@ -33,7 +33,7 @@ func InsereCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 	_, err := db.Exec(sqlStatement)
 	if err != nil {
 		if err.Error() == ErroCPFCNPJDuplicado {
-			return fmt.Errorf("CPF/CNPJ já cadastrado no Postgres")
+			return fmt.Errorf("CPF/CNPJ já cadastrado no inserido na tabela")
 		}
 		return fmt.Errorf("falha na execução do insert de CPF/CNPJ no postgres: %v", err)
 	}
@@ -75,7 +75,7 @@ func DeleteCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 }
 
 func CreateTable(db *sql.DB) error {
-	sqlStatement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS cpfcnpj (cpfcnpj VARCHAR PRIMARY KEY, iscpf BOOLEAN, status TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);")
+	sqlStatement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS cpfcnpj (cpfcnpj VARCHAR PRIMARY KEY, iscpf BOOLEAN, datacriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);")
 	_, err := db.Exec(sqlStatement)
 	if err != nil {
 		return fmt.Errorf("falha na execução da criação da tabela cpfcnpj no postgres: %v", err)

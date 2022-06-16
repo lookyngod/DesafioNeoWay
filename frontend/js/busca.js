@@ -74,6 +74,21 @@ function deleteCPFCNPJ(event) {
     });
 }
 
+// function IniciaBanco() {
+//     $(document).ready(function() {
+//         $.ajax({
+//             url: "http://localhost:5000/api/database",
+//             method: "POST",
+//         }).done(function() {}).fail(function() {
+//             Swal.fire(
+//                 'Ops...',
+//                 'Um momento...',
+//                 'error'
+//             );
+//         });
+//     });
+
+// }
 
 function buscaDados() {
     $(document).ready(function() {
@@ -83,7 +98,7 @@ function buscaDados() {
         }).done(function() {}).fail(function() {
             Swal.fire(
                 'Ops...',
-                'Usuário ou senha incorretos!',
+                'Falha na busca',
                 'error'
             );
         });

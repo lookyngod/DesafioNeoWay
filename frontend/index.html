@@ -312,13 +312,27 @@
 
 <script src="js/busca.js"></script>
 <script>
+    // $(document).ready(function() {
+    //     $.ajax({
+    //         url: "http://localhost:5000/api/database",
+    //         method: "POST",
+    //     }).done(function() {}).fail(function() {
+    //         Swal.fire(
+    //             'Ops...',
+    //             'Um momento...',
+    //             'error'
+    //         );
+    //     });
+    // });
+
+
     $(document).ready(function() {
         $.ajax({
             url: "http://localhost:5000/api/getall",
             method: "GET",
         }).done(function(data) {
 
-            console.log("Pintou notificação? no seu telefone ?")
+            console.log(data)
 
             var myVar = "";
 
@@ -329,7 +343,7 @@
                     myVar = `<tr>
                             <td id=${data[i]["cpfcnpj"]}>${data[i]["cpfcnpj"]}</td>
                             <td><i class="material-icons icon-green" data-toggle="tooltip" title="Delete">&#xe876;</i></td>
-                            <td>89 Chiaroscuro Rd, Portland, USA</td>
+                            <td id=${data[i]["cpfcnpj"]}>${data[i]["Datacriacao"]}</td>
                             <td>
                                 <a href="#" onclick="deleteCPFCNPJ(${data[i]["cpfcnpj"]})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
@@ -341,7 +355,7 @@
         }).fail(function() {
             Swal.fire(
                 'Ops...',
-                'Usuário ou senha incorretos!',
+                'Falha na busca!',
                 'error'
             );
         });

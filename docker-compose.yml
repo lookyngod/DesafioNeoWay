@@ -11,7 +11,7 @@ services:
     ports:
       - "15432:5432"
     volumes:
-      - dbpostgres:/var/lib/postgresql/data 
+      - /dbpostgres:/var/lib/postgresql/data 
 
 volumes:
   dbpostgres:
