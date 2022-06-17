@@ -15,7 +15,7 @@ A aplicação API tem como responsabilidade fornecer uma tabela com CPF e CNPJ q
 
 ## Instalação
 
-A aplicação necessite de um ambiente com [Golang](https://go.dev/doc/install) 1.17+ para rodar.
+A aplicação necessite de um ambiente com [Golang](https://go.dev/doc/install) 1.17+ para rodar
 e do [Docker Compose](https://docs.docker.com/compose/install/)
 
 
