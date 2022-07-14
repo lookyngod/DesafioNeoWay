@@ -25,7 +25,7 @@ func GetDados(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pg, err := cpfcnpj.ConectarPostgres()
+	pg, err := cpfcnpj.ConnectPostgres()
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
 		return
@@ -33,7 +33,7 @@ func GetDados(w http.ResponseWriter, r *http.Request) {
 
 	cpfcnpjmask := utils.RemoveMask(dados.CPFCNPJ)
 
-	v, err := cpfcnpj.BuscaCPFCNPJ(pg, cpfcnpjmask)
+	v, err := cpfcnpj.GetCPFCNPJ(pg, cpfcnpjmask)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusBadRequest, 0, err.Error())
 		return
@@ -41,7 +41,7 @@ func GetDados(w http.ResponseWriter, r *http.Request) {
 	utils.RespondWithJSON(w, http.StatusOK, v)
 }
 
-func RecebeCPFCNPJ(w http.ResponseWriter, r *http.Request) {
+func ReceiveCPFCNPJ(w http.ResponseWriter, r *http.Request) {
 	var dados models.CPFCNPJ
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -54,7 +54,7 @@ func RecebeCPFCNPJ(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pg, err := cpfcnpj.ConectarPostgres()
+	pg, err := cpfcnpj.ConnectPostgres()
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
 		return
@@ -81,7 +81,7 @@ func RecebeCPFCNPJ(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = cpfcnpj.InsereCPFCNPJ(pg, cpfcnpjmask)
+	err = cpfcnpj.InsertCPFCNPJ(pg, cpfcnpjmask)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusOK, 0, err.Error())
 		return
@@ -90,13 +90,13 @@ func RecebeCPFCNPJ(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllValues(w http.ResponseWriter, r *http.Request) {
-	pg, err := cpfcnpj.ConectarPostgres()
+	pg, err := cpfcnpj.ConnectPostgres()
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
 		return
 	}
 
-	dados, err := cpfcnpj.BuscaTodosCPFCNPJ(pg)
+	dados, err := cpfcnpj.GetAllCPFCNPJ(pg)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusOK, 0, err.Error())
 		return
@@ -105,7 +105,7 @@ func GetAllValues(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteDados(w http.ResponseWriter, r *http.Request) {
-	pg, err := cpfcnpj.ConectarPostgres()
+	pg, err := cpfcnpj.ConnectPostgres()
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
 		return
@@ -121,7 +121,7 @@ func DeleteDados(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateTable(w http.ResponseWriter, r *http.Request) {
-	pg, err := cpfcnpj.ConectarPostgres()
+	pg, err := cpfcnpj.ConnectPostgres()
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
 		return

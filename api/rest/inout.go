@@ -11,7 +11,7 @@ func CpfCnpjHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
 	// ROTA PARA INSERIR CPF OU CNPJ NO BANCO
 	if r.Method == http.MethodPost {
-		transport.RecebeCPFCNPJ(w, r)
+		transport.ReceiveCPFCNPJ(w, r)
 		return
 	}
 

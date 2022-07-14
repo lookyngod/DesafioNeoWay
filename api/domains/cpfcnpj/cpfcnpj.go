@@ -16,7 +16,7 @@ const (
 
 //CONEXÃO COM O POSTGRES
 
-func ConectarPostgres() (*sql.DB, error) {
+func ConnectPostgres() (*sql.DB, error) {
 	db, err := sql.Open("postgres", config.StringConexaoPostgres)
 	if err != nil {
 		return nil, err
@@ -32,7 +32,7 @@ func ConectarPostgres() (*sql.DB, error) {
 
 //QUERY PARA INSERÇÃO DE CPF/CNPJ NO POSTGRES
 
-func InsereCPFCNPJ(db *sql.DB, cpfcnpj string) error {
+func InsertCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 	sqlStatement := fmt.Sprintf("INSERT INTO cpfcnpj(cpfcnpj, iscpf) VALUES('%s', '%t');", cpfcnpj, utils.IsValidCPF(cpfcnpj))
 	_, err := db.Exec(sqlStatement)
 	if err != nil {
@@ -46,7 +46,7 @@ func InsereCPFCNPJ(db *sql.DB, cpfcnpj string) error {
 
 //QUERY PARA BUSCA DE CPF/CNPJ NO POSTGRES
 
-func BuscaCPFCNPJ(db *sql.DB, cpfcnpj string) (models.CPFCNPJ, error) {
+func GetCPFCNPJ(db *sql.DB, cpfcnpj string) (models.CPFCNPJ, error) {
 	var row models.CPFCNPJ
 	err := db.QueryRow("SELECT cpfcnpj, iscpf FROM cpfcnpj WHERE cpfcnpj=$1", cpfcnpj).Scan(&row.CPFCNPJ, &row.IsCPF)
 	if err != nil {
@@ -57,7 +57,7 @@ func BuscaCPFCNPJ(db *sql.DB, cpfcnpj string) (models.CPFCNPJ, error) {
 
 //QUERY PARA BUSCA DE TODOS OS CPF/CNPJ NO POSTGRES
 
-func BuscaTodosCPFCNPJ(db *sql.DB) ([]models.CPFCNPJ, error) {
+func GetAllCPFCNPJ(db *sql.DB) ([]models.CPFCNPJ, error) {
 	var registros []models.CPFCNPJ
 	rows, err := db.Query("SELECT * FROM cpfcnpj")
 	if err != nil {
